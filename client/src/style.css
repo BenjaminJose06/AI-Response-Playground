@@ -1,0 +1,377 @@
+/* ==========================================================================
+   style.css — AI Response Playground
+   ========================================================================== */
+
+/* 1) Fonts (load once) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Fira+Sans:wght@400;700&display=swap");
+
+
+/* 2) Global Reset & Base
+   -------------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", "Fira Sans", "Alegreya Sans", sans-serif;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  min-height: 100dvh;                /* supports mobile browser UI */
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #343541 0%, #23232f 100%);
+  color: #f3f3f3;
+}
+
+/* Design tokens */
+:root {
+  --bg-1: #23232f;                   /* cards / panels */
+  --bg-2: #343541;                   /* base background */
+  --bg-3: #40414F;                   /* secondary background */
+  --brand: #10a37f;                  /* accent */
+  --brand-hover: #0e8c6c;            /* accent hover */
+  --text: #f3f3f3;
+  --text-dim: #dcdcdc;
+  --border: #333;
+  --shadow: 0 2px 8px rgba(0,0,0,0.10);
+  --shadow-soft: 0 2px 8px rgba(0,0,0,0.08);
+
+  /* fluid type */
+  --fs-body: clamp(0.95rem, 0.9rem + 0.2vw, 1.1rem);
+  --fs-msg:  clamp(1.0rem, 0.95rem + 0.3vw, 1.2rem);
+  --fs-h2:   clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem);
+}
+
+
+/* 3) Page Header
+   -------------------------------------------------------------------------- */
+#page-header {
+  width: 100%;
+  text-align: center;
+  padding: 20px 10px 10px;
+  background: transparent;
+}
+
+#page-header h1 {
+  font-size: clamp(1.6rem, 1.2rem + 1vw, 2.2rem);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+#page-header .subtitle {
+  font-size: clamp(0.9rem, 0.8rem + 0.3vw, 1.1rem);
+  color: #aaa;
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.4;
+}
+
+
+/* 4) App Split Layout (Chat | Settings)
+   -------------------------------------------------------------------------- */
+#app {
+  flex: 1;                           /* fill space under header */
+  min-height: 0;                     /* allow inner scroll areas to scroll */
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 12px;
+}
+
+/* Left: Chat */
+#chat-section {
+  flex: 2;
+  min-width: 0;                      /* allow flex child to shrink */
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  border-right: 1px solid var(--border);
+}
+
+/* Scrollable chat area */
+#chat_container {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;                /* light side padding */
+  scroll-behavior: smooth;
+  scrollbar-width: thin;             /* Firefox */
+}
+#chat_container::-webkit-scrollbar { width: 8px; }            /* WebKit */
+#chat_container::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 8px;
+}
+
+/* Right: Settings */
+#settings-section {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--bg-1);
+  padding: 20px 18px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+
+/* 5) Settings Panel Typography / Spacing
+   -------------------------------------------------------------------------- */
+#settings-section h1,
+#settings-section h2 {
+  font-size: var(--fs-h2);
+  margin-bottom: 8px;
+}
+
+.setting-group {
+  margin-bottom: 14px;
+}
+
+.setting-group label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+  font-size: var(--fs-body);
+}
+
+#settings-section small {
+  display: block;
+  color: #aaa;
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+
+/* 6) Controls — Range Sliders with Value
+   -------------------------------------------------------------------------- */
+/* Slider row: slider grows, value stays right */
+.control {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Slider track */
+input[type="range"] {
+  width: 100%;
+  appearance: none;
+  height: 6px;
+  background: #2b2c36;
+  border-radius: 999px;
+  outline: none;
+}
+
+/* Slider thumb (WebKit) */
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--brand);
+  border: none;
+  cursor: pointer;
+}
+
+/* Slider thumb (Firefox) */
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--brand);
+  border: none;
+  cursor: pointer;
+}
+
+/* Slider track (Firefox) */
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: #2b2c36;
+  border-radius: 999px;
+}
+
+/* Value readout */
+output {
+  min-width: 3.5ch;                  /* e.g., "0.00" */
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: #ddd;
+}
+
+
+/* 7) Chat Bubbles
+   -------------------------------------------------------------------------- */
+.wrapper {
+  width: 100%;
+}
+
+.chat {
+  width: 100%;
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.profile {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #5436DA;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(84,54,218,0.12);
+  flex-shrink: 0;
+}
+
+.ai .profile {
+  background: var(--brand);
+  box-shadow: 0 2px 8px rgba(16,163,127,0.12);
+}
+
+.profile img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.message {
+  flex: 1;
+  color: var(--text);
+  font-size: var(--fs-msg);
+  background: var(--bg-1);
+  border-radius: 16px;
+  padding: 14px 16px;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  scrollbar-width: none;
+  box-shadow: var(--shadow-soft);
+  line-height: 1.6;
+}
+
+.ai .message {
+  background: var(--bg-3);
+  color: var(--text-dim);
+}
+
+.message::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* 8) Composer (Prompt Form)
+   -------------------------------------------------------------------------- */
+form {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  background: var(--bg-3);
+  display: flex;
+  gap: 10px;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+textarea {
+  width: 100%;
+  color: #fff;
+  font-size: var(--fs-body);
+  padding: 12px;
+  background: var(--bg-1);
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  resize: none;
+  min-height: 44px;
+}
+
+button {
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  background: var(--brand);
+  border-radius: 12px;
+  padding: 0 16px;
+  font-size: var(--fs-body);
+  transition: background 0.2s, transform 0.05s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+button:hover {
+  background: var(--brand-hover);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+form img {
+  width: 26px;
+  height: 26px;
+}
+
+
+/* 9) Responsive Tweaks
+   -------------------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  #app {
+    flex-direction: column;          /* stack settings under chat */
+    gap: 10px;
+  }
+
+  #chat-section {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  #settings-section {
+    width: 100%;
+    padding: 16px 14px;
+  }
+
+  .profile {
+    width: 40px;
+    height: 40px;
+  }
+
+  .message {
+    border-radius: 14px;
+    padding: 12px 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  #chat_container {
+    padding: 10px;
+  }
+
+  .chat {
+    gap: 10px;
+  }
+
+  form {
+    padding: 8px;
+  }
+
+  textarea {
+    padding: 10px;
+  }
+
+  button {
+    padding: 0 12px;
+  }
+}

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Local AI Chatbot</title>
+    <!-- Link to main stylesheet -->
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <!-- ===== Page Header ===== -->
+    <header id="page-header">
+      <h1>AI Response Playground</h1>
+      <p class="subtitle">
+        Experiment with temperature, top-p, and other parameters to see how they
+        change the way the AI responds.
+      </p>
+    </header>
+
+    <!-- ===== Main App Layout (split: Chat + Settings) ===== -->
+    <div id="app">
+
+      <!-- ===== Left: Chat Section ===== -->
+      <div id="chat-section">
+        <!-- Container for chat messages -->
+        <div id="chat_container"></div>
+
+        <!-- Chat input form -->
+        <form>
+          <textarea
+            name="prompt"
+            rows="1"
+            cols="1"
+            placeholder="Ask the AI..."
+            required
+          ></textarea>
+          <button type="submit">
+            <img src="/assets/send.svg" alt="Send" />
+          </button>
+        </form>
+      </div>
+
+      <!-- ===== Right: Settings Section ===== -->
+      <div id="settings-section">
+        <h1>AI Settings</h1>
+
+        <!-- Repeat Penalty -->
+        <div class="setting-group">
+          <label>Repeat Penalty
+            <div class="control">
+              <input
+                type="range"
+                id="repeat_penalty"
+                min="0"
+                max="2"
+                step="0.01"
+                value="1.1"
+                data-output="repeat_penalty_value"
+              />
+              <output id="repeat_penalty_value">1.1</output>
+            </div>
+            <small>Discourages repetition. Higher = less repetition.</small>
+          </label>
+        </div>
+
+        <!-- Frequency Penalty -->
+        <div class="setting-group">
+          <label>Frequency Penalty
+            <div class="control">
+              <input
+                type="range"
+                id="frequency_penalty"
+                min="0"
+                max="2"
+                step="0.01"
+                value="0.3"
+                data-output="frequency_penalty_value"
+              />
+              <output id="frequency_penalty_value">0.3</output>
+            </div>
+            <small>Discourages word reuse. Higher = more variety.</small>
+          </label>
+        </div>
+
+        <!-- Temperature -->
+        <div class="setting-group">
+          <label>Temperature
+            <div class="control">
+              <input
+                type="range"
+                id="temperature"
+                min="0"
+                max="2"
+                step="0.01"
+                value="0.8"
+                data-output="temperature_value"
+              />
+              <output id="temperature_value">0.8</output>
+            </div>
+            <small>Controls randomness. Low = predictable, High = creative.</small>
+          </label>
+        </div>
+
+        <!-- Top P -->
+        <div class="setting-group">
+          <label>Top P
+            <div class="control">
+              <input
+                type="range"
+                id="top_p"
+                min="0"
+                max="1"
+                step="0.01"
+                value="0.9"
+                data-output="top_p_value"
+              />
+              <output id="top_p_value">0.9</output>
+            </div>
+            <small>Controls diversity. Low = focused, High = varied.</small>
+          </label>
+        </div>
+
+        <!-- Top K -->
+        <div class="setting-group">
+          <label>Top K
+            <div class="control">
+              <input
+                type="range"
+                id="top_k"
+                min="1"
+                max="10000"
+                step="1"
+                value="40"
+                data-output="top_k_value"
+              />
+              <output id="top_k_value">40</output>
+            </div>
+            <small>Limits choices. Low = strict, High = more options.</small>
+          </label>
+        </div>
+
+        <!-- Max Tokens -->
+        <div class="setting-group">
+          <label>Max Tokens
+            <div class="control">
+              <input
+                type="range"
+                id="max_tokens"
+                min="1"
+                max="4096"
+                step="1"
+                value="256"
+                data-output="max_tokens_value"
+              />
+              <output id="max_tokens_value">256</output>
+            </div>
+            <small>Controls response length.</small>
+          </label>
+        </div>
+
+        <!-- Presence Penalty -->
+        <div class="setting-group">
+          <label>Presence Penalty
+            <div class="control">
+              <input
+                type="range"
+                id="presence_penalty"
+                min="0"
+                max="2"
+                step="0.01"
+                value="0.6"
+                data-output="presence_penalty_value"
+              />
+              <output id="presence_penalty_value">0.6</output>
+            </div>
+            <small>Encourages new topics. Higher = more exploration.</small>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Main Script ===== -->
+    <script type="module" src="/src/script.js"></script>
+  </body>
+</html>
