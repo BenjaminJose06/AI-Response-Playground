@@ -1,6 +1,6 @@
-# AI Response Playground
+# AI Response Tuner
 
-An interactive playground for experimenting with **Large Language Model (LLM) parameters**. Users can chat with an AI and adjust generation settings such as temperature, top-p, top-k, and penalties in real time to observe how these influence the model’s responses.
+An interactive AI Response Tuner for experimenting with Large Language Model (LLM) parameters. Users can chat with an AI and adjust generation settings such as temperature, top-p, top-k, and penalties in real time to observe how these influence the model’s responses.
 
 ---
 
